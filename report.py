@@ -45,18 +45,28 @@ def apply(curr_location, logger, auth: NjuUiaAuth, covidTestMethod='YESTERDAY', 
 
         has_applied = dk_info['TBZT'] == "1"
         wid = dk_info['WID']
-        param = {
-            'WID': wid,
-            'IS_TWZC': 1,  # 是否体温正常
-            'CURR_LOCATION': curr_location,  # 位置
-            'ZJHSJCSJ': get_zjhs_time(covidTestMethod),  # 最近核酸检测时间
-            'JRSKMYS': 1,  # 今日苏康码颜色
-            'IS_HAS_JKQK': 1,  # 健康情况
-            'JZRJRSKMYS': 1,  # 居住人今日苏康码颜色
-            'SFZJLN': 0,  # 是否最近离宁
-        }
+        # param = {
+        #     'WID': wid,
+        #     'IS_TWZC': 1,  # 是否体温正常
+        #     'CURR_LOCATION': curr_location,  # 位置
+        #     'ZJHSJCSJ': get_zjhs_time(covidTestMethod),  # 最近核酸检测时间
+        #     'JRSKMYS': 1,  # 今日苏康码颜色
+        #     'IS_HAS_JKQK': 1,  # 健康情况
+        #     'JZRJRSKMYS': 1,  # 居住人今日苏康码颜色
+        #     'SFZJLN': 0,  # 是否最近离宁
+        # }
 
-        url = URL_JKDK_APPLY + '?' + urlencode(param)
+        info = 'WID=' + wid
+        info += '&CURR_LOCATION=' + curr_location
+        info += '&IS_TWZC=1'
+        info += '&IS_HAS_JKQK=1'
+        info += '&JRSKMYS=1'
+        info += '&JZRJRSKMYS=1'
+        info += '&SFZJLN=0'
+        info += '&ZJHSJCSJ=' + get_zjhs_time(covidTestMethod)
+
+        # url = URL_JKDK_APPLY + '?' + urlencode(param)
+        url = URL_JKDK_APPLY + '?' + info
 
         if not has_applied or force:
             logger.info('正在打卡')

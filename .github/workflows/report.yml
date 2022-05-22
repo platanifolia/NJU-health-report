@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - fixtest
   
   schedule:
     - cron: '0 07 * * *'
